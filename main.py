@@ -67,6 +67,7 @@ class ExactTSPSolver:
         self.nearest_neighbors = self.precompute_nearest_neighbors()
         self.greedy_path = []
         self.greedy_distance = float('inf')
+        self.final_visited_count = 0
 
     def generate_random_points(self) -> np.ndarray:
         points = np.zeros((self.num_points, 2), dtype=np.float64)
@@ -311,7 +312,7 @@ class ExactTSPSolver:
             self.branch_and_bound_recursive(new_path, new_distance, visited, threshold)
             visited[next_point] = False
 
-    def adaptive_search(self) -> Tuple[List[int], float]:
+    def adaptive_search(self) -> Tuple[List[int], float, int]:
         print("1. Launching the multi-start greedy algorithm...")
         self.greedy_path, self.greedy_distance = self.multi_start_greedy()
         print(f"   ✅ Multi-start greedy + 2-opt: length = {self.greedy_distance:.2f}")
@@ -347,30 +348,31 @@ class ExactTSPSolver:
                 best_dist = self.best_distance
                 found_any = True
                 current_threshold = best_dist * (1.0 - step)
+                self.final_visited_count = self.visited_count
             else:
                 print(f"✗ cut off ({self.format_time(search_time)})")
 
                 if found_any:
                     print(f"   🏆 The optimum has been found: {best_dist:.2f}")
-                    return best_path, best_dist
+                    return best_path, best_dist, self.final_visited_count
                 else:
                     current_threshold = current_threshold * (1.0 + step)
 
                     if current_threshold >= self.greedy_distance:
                         print("   ⚠️  No better solutions than greedy found")
-                        return self.greedy_path, self.greedy_distance
+                        return self.greedy_path, self.greedy_distance, self.visited_count
 
         print(f"   🏆 Best found: {best_dist:.2f}")
-        return best_path, best_dist
+        return best_path, best_dist, self.final_visited_count
 
-    def solve(self) -> Tuple[List[int], float, float]:
+    def solve(self) -> Tuple[List[int], float, float, int]:
         self.start_time = time.time()
         self.last_update = self.start_time
 
-        optimal_path, optimal_dist = self.adaptive_search()
+        optimal_path, optimal_dist, visited_count = self.adaptive_search()
         elapsed = time.time() - self.start_time
 
-        return optimal_path, optimal_dist, elapsed
+        return optimal_path, optimal_dist, elapsed, visited_count
 
 
 def main():
@@ -417,17 +419,17 @@ def main():
     for i, point in enumerate(solver.points):
         print(f"   Dot {i}: ({point[0]:.2f}, {point[1]:.2f})")
 
-    optimal_path, optimal_dist, elapsed = solver.solve()
+    optimal_path, optimal_dist, elapsed, visited_count = solver.solve()
 
     print("\n📊 RESULTS:")
     print("==================================================")
     print(f"Number of points: {args.num_points}")
     print(f"Seed: {args.seed}")
     print(f"Total possible paths: {solver.format_large_number(solver.total_permutations)}")
-    print(f"Checked paths: {solver.format_large_number(solver.visited_count)}")
+    print(f"Checked paths: {solver.format_large_number(visited_count)}")
     print(f"Execution time: {elapsed:.2f} seconds")
     if elapsed > 0:
-        print(f"Speed: {solver.visited_count / elapsed:.0f} paths/sec")
+        print(f"Speed: {visited_count / elapsed:.0f} paths/sec")
     print(f"Greedy + 2-opt: {solver.greedy_distance:.6f}")
     print(f"Optimal length: {optimal_dist:.6f}")
     improvement = solver.greedy_distance - optimal_dist
@@ -450,7 +452,7 @@ def main():
             f.write(f"Greedy path: {solver.greedy_path}\n")
             f.write(f"Optimal path: {optimal_path}\n")
             f.write(f"Time: {elapsed:.2f} seconds\n")
-            f.write(f"Paths checked: {solver.visited_count}\n")
+            f.write(f"Paths checked: {visited_count}\n")
             f.write(f"Total paths: {solver.total_permutations}\n")
         print(f"\n💾 The results are saved in {filename}")
     except Exception as e:

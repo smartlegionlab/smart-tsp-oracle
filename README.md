@@ -1,4 +1,4 @@
-# Smart TSP Oracle <sup>v0.0.1</sup>
+# Smart TSP Oracle <sup>v0.1.0</sup>
 
 ---
 
@@ -25,15 +25,31 @@ For those interested in the theoretical foundations:
 
 - **[Smart TSP Solver](https://github.com/smartlegionlab/smart-tsp-solver)** - My Python library featuring advanced heuristics (`Dynamic Gravity`, `Angular Radial`) for solving *large* TSP instances where finding the exact optimum is impractical.
 - **Exact TSP Solutions (TSP ORACLE):** [exact-tsp-solver](https://github.com/smartlegionlab/exact-tsp-solver) - Optimal solutions for small instances
-- **Smart TSP Benchmark** - [Smart TSP Benchmark](https://github.com/smartlegionlab/smart-tsp-benchmark)  is a professional algorithm testing infrastructure with customizable scenarios and detailed metrics.
+- **Smart TSP Benchmark** - [Smart TSP Benchmark](https://github.com/smartlegionlab/smart-tsp-benchmark) is a professional algorithm testing infrastructure with customizable scenarios and detailed metrics.
 - **Spatial Optimization:** Computational geometry approaches for large-scale problems
 - **Heuristic Analysis:** Comparative study of modern TSP approaches
 
 ---
 
-**Disclaimer:** Performance results shown are for clustered/random distributions. 
-Results may vary based on spatial characteristics. 
-Always evaluate algorithms on your specific problem domains.
+## 🚀 Quick Start
+
+```bash
+# Install requirements
+pip install numpy numba
+
+# Run with 20 points
+python main.py -n 20 --seed 42
+
+# Run with custom parameters
+python main.py -n 15 --seed 12345
+```
+
+### Command Line Options
+
+```bash
+-n, --num-points    Number of points (3-25 recommended)
+--seed              Random seed for reproducible results
+```
 
 ---
 
@@ -62,9 +78,26 @@ A commercial license is **required** for:
 
 ---
 
-## Output
+## 🧠 Algorithm Overview
 
-`python main.py -n 20 --seed 123321411`
+### Core Components
+
+1. **Multi-Start Greedy + 2-opt**: Generates high-quality initial solution
+2. **Branch and Bound**: Exact search with mathematical optimality guarantee
+3. **MST Lower Bounds**: Minimum Spanning Tree for efficient pruning
+4. **Adaptive Thresholding**: Dynamic search space reduction
+
+### Mathematical Foundation
+
+The algorithm uses Minimum Spanning Tree (MST) calculations to compute exact lower bounds, ensuring mathematical proof of optimality for the found solutions.
+
+---
+
+## 📊 Example Output
+
+```bash
+python main.py -n 20 --seed 123321411
+```
 
 ```
 ==================================================
@@ -96,7 +129,7 @@ A commercial license is **required** for:
 1. Launching the multi-start greedy algorithm...
    ✅ Multi-start greedy + 2-opt: length = 4676.81
    🎯 We start the search from 4209.13 (90.0%)
-Checked: 288 paths | Speed: 563/sec | Time: 00:00:00✓ found: 4176.83 (00:00:00)
+Checked: 287 paths | Speed: 574/sec | Time: 00:00:00✓ found: 4176.83 (00:00:00)
    🔍 Threshold: 3884.45 (83.1%)... ✗ cut off (00:00:00)
    🏆 The optimum has been found: 4176.83
 
@@ -105,9 +138,9 @@ Checked: 288 paths | Speed: 563/sec | Time: 00:00:00✓ found: 4176.83 (00:00:00
 Number of points: 20
 Seed: 123321411
 Total possible paths: so many
-Checked paths: 0
-Execution time: 1.00 seconds
-Speed: 0 paths/sec
+Checked paths: 298
+Execution time: 1.01 seconds
+Speed: 295 paths/sec
 Greedy + 2-opt: 4676.805998
 Optimal length: 4176.825110
 Improvement: 499.980888 (10.691%)
@@ -117,3 +150,36 @@ The optimal path: [0, 17, 8, 5, 19, 12, 2, 11, 16, 15, 3, 14, 7, 1, 4, 13, 10, 6
 
 💾 The results are saved in tsp_result_n20_seed123321411.txt
 ```
+
+---
+
+## 📋 Performance Characteristics
+
+- **Optimal for**: 3-25 points (exact solutions)
+- **Time complexity**: O(n! * 2^n) in worst case
+- **Space complexity**: O(n²) for distance matrix
+- **Features**: Progress tracking, result export, reproducible runs
+
+## 🛠️ Technical Details
+
+### Requirements
+- Python 3.8+
+- numpy
+- numba
+
+### Implementation Highlights
+- Numba-accelerated distance matrix computation
+- Union-Find data structure for MST calculations
+- Adaptive thresholding for efficient pruning
+- Comprehensive result logging and export
+
+---
+
+**Disclaimer:** Performance results shown are for clustered/random distributions. 
+Results may vary based on spatial characteristics. 
+Always evaluate algorithms on your specific problem domains.
+
+## 📞 Support
+
+For technical support or commercial licensing inquiries:
+📧 **smartlegiondev@gmail.com**
