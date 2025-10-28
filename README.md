@@ -1,4 +1,4 @@
-# Smart TSP Oracle <sup>v0.1.1</sup>
+# Smart TSP Oracle <sup>v1.0.0</sup>
 
 ---
 
