@@ -1,4 +1,8 @@
-# Smart TSP Oracle <sup>v1.0.0</sup>
+# Smart TSP Oracle <sup>v1.0.1</sup>
+
+---
+
+A high-performance, exact solver for the Traveling Salesman Problem (TSP) implemented in Python. Utilizes an intelligent Branch and Bound algorithm with adaptive thresholding to find the globally optimal solution for small to medium-sized TSP instances.
 
 ---
 
@@ -11,24 +15,19 @@
 
 ---
 
-A high-performance, exact solver for the Traveling Salesman Problem (TSP) implemented in Python. Utilizes an intelligent Branch and Bound algorithm with adaptive thresholding to find the globally optimal solution for small to medium-sized TSP instances.
+## ⚠️ Disclaimer
 
-## Go version: [exact-tsp-solver](https://github.com/smartlegionlab/exact-tsp-solver)
+**By using this software, you agree to the full disclaimer terms.**
+
+**Summary:** Software provided "AS IS" without warranty. You assume all risks.
+
+**Full legal disclaimer:** See [DISCLAIMER.md](https://github.com/smartlegionlab/smart-tsp-oracle/blob/master/DISCLAIMER.md)
 
 ---
 
-## 👨‍💻 Author
+## Related Research
 
-[**A.A. Suvorov**](https://github.com/smartlegionlab/)
-
-*   Passionate about pushing the boundaries of algorithmic optimization.
-*   This solver was developed to bridge the gap between theoretical computer science and practical implementation.
-
-- Researcher specializing in computational optimization and high-performance algorithms
-- Focused on bridging theoretical computer science with practical engineering applications
-- This project represents extensive research into spatial optimization techniques
-
-## 🔗 Related Research
+Position-Candidate-Hypothesis (PCH) Paradigm: [doi.org/10.5281/zenodo.17614888](https://doi.org/10.5281/zenodo.17614888) - A New Research Direction for NP-Complete Problems
 
 For those interested in the theoretical foundations:
 
@@ -40,7 +39,7 @@ For those interested in the theoretical foundations:
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # Install requirements
@@ -62,26 +61,27 @@ python main.py -n 15 --seed 12345
 
 ---
 
-## 📜 License & Disclaimer
+## License
 
-BSD 3-Clause License
-
-Copyright (c) 2025, Alexander Suvorov
-
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-    DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-    SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*Licensed under [BSD 3-Clause License](LICENSE) • Copyright (©) 2026, [Alexander Suvorov](https://github.com/smartlegionlab)*
 
 ---
 
-## 🧠 Algorithm Overview
+## Author
+
+[**Alexander Suvorov**](https://github.com/smartlegionlab/)
+
+- Passionate about pushing the boundaries of algorithmic optimization.
+- This solver was developed to bridge the gap between theoretical computer science and practical implementation.
+
+
+- Researcher specializing in computational optimization and high-performance algorithms
+- Focused on bridging theoretical computer science with practical engineering applications
+- This project represents extensive research into spatial optimization techniques
+
+---
+
+## Algorithm Overview
 
 ### Core Components
 
@@ -96,7 +96,7 @@ The algorithm uses Minimum Spanning Tree (MST) calculations to compute exact low
 
 ---
 
-## 📊 Example Output
+## Example Output
 
 ```bash
 python main.py -n 20 --seed 123321411
@@ -104,11 +104,11 @@ python main.py -n 20 --seed 123321411
 
 ```
 ==================================================
-🚀 TSP SOLVER (ORACLE v2) - 20 POINTS
-🔢 SEED: 123321411
+TSP SOLVER (ORACLE v2) - 20 POINTS
+SEED: 123321411
 ==================================================
 
-📍 Coordinates of points:
+Coordinates of points:
    Dot 0: (716.02, 797.47)
    Dot 1: (336.04, 587.85)
    Dot 2: (620.65, 170.96)
@@ -130,13 +130,13 @@ python main.py -n 20 --seed 123321411
    Dot 18: (929.70, 824.26)
    Dot 19: (726.95, 159.40)
 1. Launching the multi-start greedy algorithm...
-   ✅ Multi-start greedy + 2-opt: length = 4676.81
-   🎯 We start the search from 4209.13 (90.0%)
+   Multi-start greedy + 2-opt: length = 4676.81
+   We start the search from 4209.13 (90.0%)
 Checked: 287 paths | Speed: 574/sec | Time: 00:00:00✓ found: 4176.83 (00:00:00)
-   🔍 Threshold: 3884.45 (83.1%)... ✗ cut off (00:00:00)
-   🏆 The optimum has been found: 4176.83
+   Threshold: 3884.45 (83.1%)... ✗ cut off (00:00:00)
+   The optimum has been found: 4176.83
 
-📊 RESULTS:
+RESULTS:
 ==================================================
 Number of points: 20
 Seed: 123321411
@@ -151,19 +151,19 @@ Improvement: 499.980888 (10.691%)
 Greedy way: [3, 15, 16, 11, 2, 12, 19, 5, 8, 17, 1, 4, 7, 14, 13, 10, 6, 9, 0, 18]
 The optimal path: [0, 17, 8, 5, 19, 12, 2, 11, 16, 15, 3, 14, 7, 1, 4, 13, 10, 6, 9, 18]
 
-💾 The results are saved in tsp_result_n20_seed123321411.txt
+The results are saved in tsp_result_n20_seed123321411.txt
 ```
 
 ---
 
-## 📋 Performance Characteristics
+## Performance Characteristics
 
 - **Optimal for**: 3-25 points (exact solutions)
 - **Time complexity**: O(n! * 2^n) in worst case
 - **Space complexity**: O(n²) for distance matrix
 - **Features**: Progress tracking, result export, reproducible runs
 
-## 🛠️ Technical Details
+## Technical Details
 
 ### Requirements
 - Python 3.8+
@@ -181,8 +181,3 @@ The optimal path: [0, 17, 8, 5, 19, 12, 2, 11, 16, 15, 3, 14, 7, 1, 4, 13, 10, 6
 **Disclaimer:** Performance results shown are for clustered/random distributions. 
 Results may vary based on spatial characteristics. 
 Always evaluate algorithms on your specific problem domains.
-
-## 📞 Support
-
-For technical support or commercial licensing inquiries:
-📧 **smartlegiondev@gmail.com**

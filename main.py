@@ -1,4 +1,4 @@
-# Copyright (©) 2025, Alexander Suvorov. All rights reserved.
+# Copyright (©) 2026, Alexander Suvorov. All rights reserved.
 import numpy as np
 import math
 import time
@@ -315,7 +315,7 @@ class ExactTSPSolver:
     def adaptive_search(self) -> Tuple[List[int], float, int]:
         print("1. Launching the multi-start greedy algorithm...")
         self.greedy_path, self.greedy_distance = self.multi_start_greedy()
-        print(f"   ✅ Multi-start greedy + 2-opt: length = {self.greedy_distance:.2f}")
+        print(f"   Multi-start greedy + 2-opt: length = {self.greedy_distance:.2f}")
 
         current_threshold = self.greedy_distance * 0.90
         step = 0.07
@@ -323,7 +323,7 @@ class ExactTSPSolver:
         best_dist = self.greedy_distance
         found_any = False
 
-        print(f"   🎯 We start the search from {current_threshold:.2f} (90.0%)")
+        print(f"   We start the search from {current_threshold:.2f} (90.0%)")
 
         for iteration in range(200):
             self.best_path = []
@@ -335,7 +335,7 @@ class ExactTSPSolver:
             visited[0] = True
 
             print(
-                f"   🔍 Threshold: {current_threshold:.2f} ({current_threshold / self.greedy_distance * 100:.1f}%)... ",
+                f"   Threshold: {current_threshold:.2f} ({current_threshold / self.greedy_distance * 100:.1f}%)... ",
                 end="", flush=True)
 
             start_time = time.time()
@@ -353,16 +353,16 @@ class ExactTSPSolver:
                 print(f"✗ cut off ({self.format_time(search_time)})")
 
                 if found_any:
-                    print(f"   🏆 The optimum has been found: {best_dist:.2f}")
+                    print(f"   The optimum has been found: {best_dist:.2f}")
                     return best_path, best_dist, self.final_visited_count
                 else:
                     current_threshold = current_threshold * (1.0 + step)
 
                     if current_threshold >= self.greedy_distance:
-                        print("   ⚠️  No better solutions than greedy found")
+                        print("   No better solutions than greedy found")
                         return self.greedy_path, self.greedy_distance, self.visited_count
 
-        print(f"   🏆 Best found: {best_dist:.2f}")
+        print(f"   Best found: {best_dist:.2f}")
         return best_path, best_dist, self.final_visited_count
 
     def solve(self) -> Tuple[List[int], float, float, int]:
@@ -401,7 +401,7 @@ def main():
                 return f"{n / 1000000000:.1f} billion."
 
         print(
-            f"⚠️  WARNING: for {args.num_points} points there will be approximately {format_large_number(total_perms)} permutations")
+            f"WARNING: for {args.num_points} points there will be approximately {format_large_number(total_perms)} permutations")
         print("This may take a considerable amount of time.")
         response = input("Continue? (y/n): ")
         if response.lower() != 'y':
@@ -411,17 +411,17 @@ def main():
     solver = ExactTSPSolver(args.num_points, args.seed)
 
     print("==================================================")
-    print(f"🚀 TSP SOLVER (ORACLE v2) - {args.num_points} POINTS")
-    print(f"🔢 SEED: {args.seed}")
+    print(f"TSP SOLVER (ORACLE v2) - {args.num_points} POINTS")
+    print(f"SEED: {args.seed}")
     print("==================================================")
 
-    print("\n📍 Coordinates of points:")
+    print("\nCoordinates of points:")
     for i, point in enumerate(solver.points):
         print(f"   Dot {i}: ({point[0]:.2f}, {point[1]:.2f})")
 
     optimal_path, optimal_dist, elapsed, visited_count = solver.solve()
 
-    print("\n📊 RESULTS:")
+    print("\nRESULTS:")
     print("==================================================")
     print(f"Number of points: {args.num_points}")
     print(f"Seed: {args.seed}")
@@ -454,9 +454,9 @@ def main():
             f.write(f"Time: {elapsed:.2f} seconds\n")
             f.write(f"Paths checked: {visited_count}\n")
             f.write(f"Total paths: {solver.total_permutations}\n")
-        print(f"\n💾 The results are saved in {filename}")
+        print(f"\nThe results are saved in {filename}")
     except Exception as e:
-        print(f"\n❌ Error saving file: {e}")
+        print(f"\nError saving file: {e}")
 
 
 if __name__ == "__main__":
